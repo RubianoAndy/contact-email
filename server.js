@@ -2,13 +2,18 @@ require('dotenv').config();
 
 const express = require('express');
 const sendEmailRequests = require('./routes/send-email');
-const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const PORT = process.env.PORT; // const PORT = process.env.PORT || 8000;
 
 const app = express();
 app.use(express.json());
 app.disable('x-powered-by');
+app.use(cors());
+
+app.use(cors({
+    origin: process.env.NEXTJS_FRONTEND_CORS
+}));
 
 app.use('/api', sendEmailRequests);
 
